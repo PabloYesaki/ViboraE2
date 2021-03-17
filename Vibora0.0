@@ -1,20 +1,26 @@
+
+###importando herramientas
 from turtle import *
 from random import randrange
 from freegames import square, vector
 
+###establecer los objetos
 food = vector(0, 0)
 snake = [vector(10, 0)]
 aim = vector(0, -10)
 
+###Codigo para cabio de dirección
 def change(x, y):
     "Change snake direction."
     aim.x = x
     aim.y = y
 
+###Checar que el jugador siga dentro de la pantalla
 def inside(head):
     "Return True if head inside boundaries."
     return -200 < head.x < 190 and -200 < head.y < 190
 
+###Avanzar hacia adelante
 def move():
     "Move snake forward one segment."
     head = snake[-1].copy()
