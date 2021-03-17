@@ -3,11 +3,25 @@
 from turtle import *
 from random import randrange
 from freegames import square, vector
+import random
 
 ###establecer los objetos
 food = vector(0, 0)
 snake = [vector(10, 0)]
 aim = vector(0, -10)
+
+
+###Establecer Colores
+color = ['green','yellow','blue','orange','pink']
+
+###Elegir color de vibora
+color_Snake = random.choice(color)
+
+###Quitar color de la lista para no repetir
+color.remove(color_Snake)
+
+###Elegir color de comida
+color_Food = random.choice(color)
 
 ###Codigo para cabio de dirección
 def change(x, y):
@@ -43,9 +57,9 @@ def move():
     clear()
 
     for body in snake:
-        square(body.x, body.y, 9, 'black')
+        square(body.x, body.y, 9, color_Snake)
 
-    square(food.x, food.y, 9, 'green')
+    square(food.x, food.y, 9, color_Food)
     update()
     ontimer(move, 100)
 
