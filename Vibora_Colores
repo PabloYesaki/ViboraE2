@@ -45,19 +45,20 @@ def move():
     "Move snake forward one segment."
     head = snake[-1].copy()
     head.move(aim)
-
+###Game Over
     if not headinside(head) or head in snake:
         square(head.x, head.y, 9, 'red')
         update()
         return
 
     snake.append(head)
-
+###Agregar bloque cuando se lo come
     if head == food:
         print('Snake:', len(snake))
         food.x = randrange(-15, 15) * 10
         food.y = randrange(-15, 15) * 10
-    else:
+###No agregar bloque si no se come la manzana   
+   else:
         snake.pop(0)
         if foodinside(food) and randint(0, 1) == 0:
             food.x = food.x + randint(-1, 1) * 10
@@ -65,7 +66,7 @@ def move():
             food.y = food.y + randint(-1, 1) * 10
 
     clear()
-
+###Color, y grandeza de la serpiente
     for body in snake:
         square(body.x, body.y, 9, color_Snake)
 
@@ -73,6 +74,7 @@ def move():
     update()
     ontimer(move, 100)
 
+###Area de juego 
 setup(420, 420, 370, 0)
 hideturtle()
 tracer(False)
