@@ -2,12 +2,27 @@
 ###importando herramientas
 from turtle import *
 from random import randrange
+from random import randint
 from freegames import square, vector
+import random
 
 ###establecer los objetos
 food = vector(0, 0)
 snake = [vector(10, 0)]
 aim = vector(0, -10)
+
+
+###Establecer Colores
+color = ['green','yellow','blue','orange','pink']
+
+###Elegir color de vibora
+color_Snake = random.choice(color)
+
+###Quitar color de la lista para no repetir
+color.remove(color_Snake)
+
+###Elegir color de comida
+color_Food = random.choice(color)
 
 ###Codigo para cabio de dirección
 def change(x, y):
@@ -16,39 +31,50 @@ def change(x, y):
     aim.y = y
 
 ###Checar que el jugador siga dentro de la pantalla
-def inside(head):
+def headinside(head):
     "Return True if head inside boundaries."
     return -200 < head.x < 190 and -200 < head.y < 190
+
+###Checar que la comida siga dentro de la pantalla
+def foodinside(food):
+    "Return True if head inside boundaries."
+    return -190 < food.x < 180 and -190 < food.y < 180
 
 ###Avanzar hacia adelante
 def move():
     "Move snake forward one segment."
     head = snake[-1].copy()
     head.move(aim)
-
-    if not inside(head) or head in snake:
+###Game Over
+    if not headinside(head) or head in snake:
         square(head.x, head.y, 9, 'red')
         update()
         return
 
     snake.append(head)
-
+###Agregar bloque cuando se lo come
     if head == food:
         print('Snake:', len(snake))
         food.x = randrange(-15, 15) * 10
         food.y = randrange(-15, 15) * 10
-    else:
+###No agregar bloque si no se come la manzana   
+   else:
         snake.pop(0)
+        if foodinside(food) and randint(0, 1) == 0:
+            food.x = food.x + randint(-1, 1) * 10
+        elif foodinside(food):
+            food.y = food.y + randint(-1, 1) * 10
 
     clear()
-
+###Color, y grandeza de la serpiente
     for body in snake:
-        square(body.x, body.y, 9, 'black')
+        square(body.x, body.y, 9, color_Snake)
 
-    square(food.x, food.y, 9, 'green')
+    square(food.x, food.y, 9, color_Food)
     update()
     ontimer(move, 100)
 
+###Area de juego 
 setup(420, 420, 370, 0)
 hideturtle()
 tracer(False)
